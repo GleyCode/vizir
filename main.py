@@ -1,60 +1,75 @@
 """
-Selenium WebDriver é uma ferramenta python para o selenium, que permite automatizar a interação com navegadores web.
+Vizir
+Copyright (C) 2026 Abraão Silva
 
-Para interagir com o navegador é preciso um driver especifico para cada navegador. No caso do Firefox, usamos o GeckoDriver.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
 """
 
-from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from webdriver_manager.firefox import GeckoDriverManager
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import time
 
-service = Service(GeckoDriverManager().install())
-navegador = webdriver.Firefox(service=service)
+import os
 
-url = "https://www.infojobs.com.br/vagas-de-emprego-em-ceara.aspx"
+from scraper import ColetaInfoVagas
+from filter_ai import FiltraVagasAI
+from comunication import EnvioTelegram
 
-try:
-    navegador.get(url)
+
+class PipelineVagas:
+    """Classe para organizar as instruções de execução do agente."""
     
-    # 1. LIDANDO COM O POP-UP (Usando Espera Explícita para ser mais rápido)
-    try:
-        # Espera até 10 segundos para o botão aparecer
-        botao_aceitar = WebDriverWait(navegador, 10).until(
-            EC.element_to_be_clickable((By.ID, "didomi-notice-agree-button"))
-        )
-        botao_aceitar.click()
-        print("✅ Termos de uso aceitos.")
-    except Exception as e:
-        print("⚠️ Botão de termos não apareceu ou já foi fechado.")
-
-    # 2. COLETANDO OS CARDS
-    time.sleep(2) # Pequena pausa para garantir que os cards renderizaram
-    vagas = navegador.find_elements(By.CLASS_NAME, "js_vacancyLoad")
+    def __init__(self):
+        """Inicialize a instância com os seguintes atributos.
+        
+        Atributos:
+            _api_key: Chave da API do Geminai.
+            _token: Chave de acesso aAPI do bot Telegram.
+            _chat_id: Identificador do bot.
+            _cidade: Local de publicação das vagas.
+            _perfil: Filtra as vagas por um tipo especifico de segmento, por 
+                    exemplo, "Logistíca".
+        """
+        self._api_key = os.getenv("GEMINI_API_KEY")
+        self._token = os.getenv("TELEGRAM_TOKEN")
+        self._chat_id = os.getenv("TELEGRAM_CHAT_ID")
+        self._cidade = "Fortaleza"
+        self._perfil = "Qualquer vaga postada."
     
-    print(f"--- Analisando {len(vagas)} vagas encontradas ---\n")
-
-    for vaga in vagas:
+    def executar(self):
+        """Execute todas as rotinas do Agente."""
+        
+        # 1. Coletar e tratrar as vagas do InfoJobs.
         try:
-            # Dentro do card, procuramos o elemento da data que você achou
-            data_elemento = vaga.find_element(By.CLASS_NAME, "text-nowrap")
-            data_texto = data_elemento.text.strip()
-            
-            # 3. FILTRO DE DATA
-            if "Hoje" in data_texto:
-                # Se for hoje, pegamos o título para confirmar
-                titulo = vaga.find_element(By.TAG_NAME, "h2").text
-                print(f"📌 NOVA VAGA: {titulo} (Postada: {data_texto})")
-            
-        except:
-            # Algumas vagas no topo podem ser anúncios com estrutura diferente
-            continue
+            info_jobs = ColetaInfoVagas()
+            info_jobs.configurar_navegador()
+            info_jobs.abrir_navegador()
+            info_jobs.acessar_pagina()
+            info_jobs.aceitar_cookies()
+            info_jobs.informar_cidade(self._cidade)
+            info_jobs.localizar_vagas()
+            vagas_hoje = info_jobs.filtrar_por_data()
+        finally:
+            info_jobs.fechar_navegador()
+    
+        # 2. Filtrar as vagas usando IA.
+        gen_ai = FiltraVagasAI(self._api_key, vagas_hoje, self._perfil)
+        relatorio = gen_ai.filtrar_vagas()
+        
+        # 3. Enviar a mensagem filtrada para o WhatsApp.
+        telegram = EnvioTelegram(self._token, self._chat_id, relatorio)
+        telegram.enviar_relatorio()
 
-finally:
-    print("\nBusca finalizada.")
-    # Por enquanto, não vamos fechar para você ver o console
-    # navegador.quit()
+
+if __name__ == "__main__":
+    """Executa o script para fazer a coleta das vagas."""
+    pipeline = PipelineVagas()
+    pipeline.executar()
