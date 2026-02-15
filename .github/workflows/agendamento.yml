@@ -3,7 +3,7 @@ name: Executar Agente de Vagas
 on:
   schedule:
     # O horário é em UTC. 22:00 UTC = 19:00 Brasília
-    - cron: '45 13 * * *'
+    - cron: '0 21 * * *'
   workflow_dispatch: # Permite rode manualmente pelo botão no GitHub
 
 jobs:
