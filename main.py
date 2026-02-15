@@ -70,6 +70,5 @@ class PipelineVagas:
 
 
 if __name__ == "__main__":
-    """Executa o script para fazer a coleta das vagas."""
     pipeline = PipelineVagas()
     pipeline.executar()
