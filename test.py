@@ -1,6 +1,6 @@
 """
 Este arquivo ainda está em produção; o fato é que testar automações não é uma 
-tarefa fácil, querer tempo, mas temos um caminho, é preciso simular (Mocks) o 
+tarefa fácil, requer tempo, mas temos um caminho, é preciso simular (Mocks) o 
 funcionamento do Selenium.
 """
 
