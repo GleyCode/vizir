@@ -158,6 +158,6 @@ class ColetaInfoVagas:
                 if "Hoje" in data_texto:
                     titulo = vaga.find_element(By.TAG_NAME, "h2").text
                     vagas_hoje.append((titulo, data_texto))
-            except Exception as error:
+            except:
                 continue
         return vagas_hoje
