@@ -18,13 +18,11 @@ along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 
 from selenium import webdriver
-from selenium.webdriver.firefox.service import Service
-from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.firefox.options import Options
 import time
 
 
@@ -55,10 +53,8 @@ class ColetaInfoVagas:
         
         Configura de forma automática o Firefox usando o GeckoDriverManager.
         """
-        try:
-            self._service = Service(GeckoDriverManager().install())
-            
-            self._options = Options() # Modo headless
+        try:            
+            self._options = FirefoxOptions() # Modo headless
             self._options.add_argument("--headless")
         except Exception as error:
             print(f"Erro ao configurar o navegador: {error}")
@@ -70,9 +66,7 @@ class ColetaInfoVagas:
         configurado.
         """
         try:
-            self._navegador = webdriver.Firefox(service=self._service,        
-                    options=self._options
-            )
+            self._navegador = webdriver.Firefox(options=self._options)
         except Exception as error:
             print(f"Erro ao abrir o navegador: {error}")
         
