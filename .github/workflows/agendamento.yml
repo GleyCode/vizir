@@ -13,19 +13,16 @@ jobs:
     steps:
       - name: Checkout do código
         uses: actions/checkout@v3
-        
-      - name: Criar uma sessão no tmate (debug)                               
-        uses: mxschmitt/action-tmate@v3
 
       - name: Configurar Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.13'
+          python-version: '3.11'
 
-      - name: Instalar Firefox e Geckodriver
+      - name: Instalar Firefox
         run: |
           sudo apt-get update
-          sudo apt-get install firefox -y
+          sudo apt-get install -y firefox
 
       - name: Instalar dependências
         run: |
