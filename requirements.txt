@@ -1,4 +1,4 @@
-selenium
-webdriver-manager
-pyTelegramBotAPI
-google-genai
+selenium==4.40.0
+webdriver-manager==4.0.2
+pyTelegramBotAPI==4.30.0
+google-genai==1.63.0
