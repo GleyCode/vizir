@@ -58,7 +58,7 @@ class ColetaInfoVagas:
             self._options.add_argument("--headless")
             self._options.add_argument("--no-sandbox")
             self._options.add_argument("--disable-dev-shm-usage")
-            self._options.binary_location = "/usr/bin/firefox"
+            self._options.binary_location = "/snap/bin/firefox"
         except Exception as error:
             print(f"Erro ao configurar o navegador: {error}")
     
