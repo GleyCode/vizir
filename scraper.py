@@ -58,7 +58,6 @@ class ColetaInfoVagas:
             self._options.add_argument("--headless")
             self._options.add_argument("--no-sandbox")
             self._options.add_argument("--disable-dev-shm-usage")
-            self._options.binary_location = "/snap/bin/firefox"
         except Exception as error:
             print(f"Erro ao configurar o navegador: {error}")
     
@@ -69,7 +68,7 @@ class ColetaInfoVagas:
         configurado.
         """
         try:
-            self._navegador = webdriver.Firefox(options=self._options)
+            self._navegador = webdriver.Remote(command_executor="http://localhost:4444/wd/hub", options=self._options)
         except Exception as error:
             print(f"Erro ao abrir o navegador: {error}")
         
