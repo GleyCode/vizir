@@ -58,16 +58,14 @@ class FiltraVagasAI:
        
         Esqueleto para exemplo de formatação:
         
-        # Vaga
-        #### Postada em: dd/mm/aaaa
+        Vaga
+        Postada em: Hoje
         ---
-        
-        @Aqui você adiciona um espaço em branco para separar as vagas.@
 
         Sua tarefa:
         1. Identifique quais vagas combinam com o perfil.
         2. Crie uma mensagem amigável para Telegram, tendo como exemplo o esqueleto informado e formatação Markdown para listagem dessas vagas.
-        3. No esqueleto, o que está entre @@ é um comentário que serve de instrução.
+        3. Deixe sempre um espaço em branco para separar as vagas.
         4. Se não houver nenhuma correspondência exata, responda apenas: 
         "Olá boa noite. Passando para te avisar que nenhuma vaga foi encontrada hoje para o perfil especificado."
         """
