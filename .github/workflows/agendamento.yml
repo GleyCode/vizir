@@ -19,10 +19,16 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Instalar Firefox
+      - name: Instalar Firefox ESR
         run: |
           sudo apt-get update
-          sudo apt-get install -y firefox
+          sudo apt-get remove firefox -y
+          sudo apt-get install -y firefox-esr
+
+      - name: Verificar Firefox
+        run: |
+          which firefox
+          firefox --version
 
       - name: Instalar dependências
         run: |
