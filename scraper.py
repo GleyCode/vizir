@@ -69,8 +69,8 @@ class ColetaInfoVagas:
         configurado.
         """
         try:
-            self._navegador = webdriver.Firefox(service=self._service,
-                options=self._options
+            self._navegador = webdriver.Firefox(service=self._service,        
+                                                options=self._options
             )
         except Exception as error:
             print(f"Erro ao abrir o navegador: {error}")
@@ -122,7 +122,7 @@ class ColetaInfoVagas:
             )
             informar_cidade.clear()
             informar_cidade.send_keys(cidade)
-            time.sleep(1) # Aguarda as sugestões aparecer.
+            time.sleep(2) # Aguarda as sugestões aparecer.
             informar_cidade.send_keys(Keys.ARROW_DOWN) # Seleciona a primeira sugestão.
             informar_cidade.send_keys(Keys.ENTER)
         except Exception as error:
