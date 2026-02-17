@@ -10,8 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checar código
       - uses: actions/checkout@v4
 
+      - name: Comfigurar Python
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
