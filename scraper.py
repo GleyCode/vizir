@@ -68,7 +68,7 @@ class ColetaInfoVagas:
         configurado.
         """
         try:
-            self._navegador = webdriver.Remote(command_executor="http://localhost:4444/wd/hub", options=self._options)
+            self._navegador = webdriver.Firefox(options=self._options)
         except Exception as error:
             print(f"Erro ao abrir o navegador: {error}")
         
