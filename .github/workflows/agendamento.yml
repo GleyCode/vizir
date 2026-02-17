@@ -4,7 +4,7 @@ on:
   schedule:
     # O horário é em UTC. 22:00 UTC = 19:00 Brasília
     - cron: '0 21 * * *'
-  workflow_dispatch: # Permite rode manualmente pelo botão no GitHub
+  workflow_dispatch: # Rodo manualmente pelo botão no GitHub
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
       - name: Instalar Firefox e Geckodriver
         run: |
           sudo apt-get update
-          sudo apt-get install firefox
+          sudo apt-get install firefox -y
 
       - name: Instalar dependências
         run: |
