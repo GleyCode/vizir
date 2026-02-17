@@ -51,13 +51,14 @@ class ColetaInfoVagas:
     def configurar_navegador(self):
         """Configure o Firefox.
         
-        Configura de forma automática o Firefox usando o GeckoDriverManager.
+        Configura as opções do Firefox, ativando a opção --headless para rodar 
+        sem interface gráfica.
         """
         try:            
             self._options = FirefoxOptions() # Modo headless
             self._options.add_argument("--headless")
-            self._options.add_argument("--no-sandbox")
-            self._options.add_argument("--disable-dev-shm-usage")
+            #self._options.add_argument("--no-sandbox")
+            #self._options.add_argument("--disable-dev-shm-usage")
         except Exception as error:
             print(f"Erro ao configurar o navegador: {error}")
     
