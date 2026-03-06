@@ -134,7 +134,7 @@ class ColetaInfoVagas:
         try:
             time.sleep(2)
             self._vagas = self._navegador.find_elements(By.CLASS_NAME, 
-                        "card"
+                        "js_vacancyLoad"
                         )
         except Exception as error:
             print(f"Erro encontrado ao buscar as classes HTML: {error}")
@@ -151,24 +151,25 @@ class ColetaInfoVagas:
                 data_elemento = vaga.find_element(By.CLASS_NAME, "text-nowrap")
                 data_texto = data_elemento.text.strip()
                 
-                if "Hoje" in data_texto:  # aqui devo coletar todas as informações. 
+                if "Ontem" in data_texto:
                     titulo = vaga.find_element(
                         By.TAG_NAME, 
                         "h2").text.strip()
-                    funcao = vaga.find_element(
-                        By.CLASS_NAME, 
-                        "h3 font-weight-bold text-body mb-2").text.strip()
+            
                     cidade = vaga.find_element(
                         By.CLASS_NAME, 
                         "mb-8").text.strip()
+                    
                     salario = vaga.find_element(
-                        By.CSS_SELECTOR, 
-                        ".d-inline-flex flex-wrap mb-8 text-medium > div").text.strip()
+                        By.CSS_SELECTOR,
+                        ".d-inline-flex > div").text.strip()
+                    
                     empresa = vaga.find_element(
-                        By.CLASS_NAME, 
-                        "text-body text-decoration-none").text.strip()
-
-                    vagas_hoje.append((titulo, data_texto, funcao, cidade, salario, empresa))
+                        By.CSS_SELECTOR, 
+                        ".text-body > a").text.strip()
+                    
+                    vagas_hoje.append((titulo, data_texto, cidade, salario, empresa))
             except:
                 continue
+        print(vagas_hoje)
         return vagas_hoje
