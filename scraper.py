@@ -151,9 +151,10 @@ class ColetaInfoVagas:
                 data_elemento = vaga.find_element(By.CLASS_NAME, "text-nowrap")
                 data_texto = data_elemento.text.strip()
                 
-                if "Hoje" in data_texto:
+                if "Ontem" in data_texto:
                     titulo = vaga.find_element(By.TAG_NAME, "h2").text
                     vagas_hoje.append((titulo, data_texto))
             except:
                 continue
-        return vagas_hoje
+        print(vagas_hoje)
+        return vagas_hojes
