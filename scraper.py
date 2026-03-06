@@ -56,7 +56,7 @@ class ColetaInfoVagas:
         """
         try:            
             self._options = FirefoxOptions() # Modo headless
-            self._options.add_argument("--headless")
+            #self._options.add_argument("--headless")
         except Exception as error:
             print(f"Erro ao configurar o navegador: {error}")
     
@@ -123,7 +123,8 @@ class ColetaInfoVagas:
             informar_cidade.send_keys(Keys.ENTER)
         except Exception as error:
             print(f"Campo não encontrado. {error}")
-            
+    
+    # TODO: Alterar a classe que identifica os cards, o correto é: "card"
     def localizar_vagas(self):
         """Encontre os cards de vagas.
         
@@ -134,7 +135,7 @@ class ColetaInfoVagas:
         try:
             time.sleep(2)
             self._vagas = self._navegador.find_elements(By.CLASS_NAME, 
-                        "js_vacancyLoad"
+                        "js_rowCard"
                         )
         except Exception as error:
             print(f"Erro encontrado ao buscar as classes HTML: {error}")
@@ -151,8 +152,16 @@ class ColetaInfoVagas:
                 data_elemento = vaga.find_element(By.CLASS_NAME, "text-nowrap")
                 data_texto = data_elemento.text.strip()
                 
-                if "Hoje" in data_texto:
+                if "Hoje" in data_texto:  # aqui devo coletar todas as informações. 
                     titulo = vaga.find_element(By.TAG_NAME, "h2").text
+                    """
+                    funcao = vaga.find_element(By.CLASS_NAME, "h3").text
+                    cidade = vaga.find_element(By.CLASS_NAME, "mb-8").text
+                    salario = vaga.find_element(By.)
+                    requisitos = ""
+                    modalidade = ""
+                    descricao = ""
+                    """
                     vagas_hoje.append((titulo, data_texto))
             except:
                 continue
