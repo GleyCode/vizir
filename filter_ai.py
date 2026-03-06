@@ -46,7 +46,6 @@ class FiltraVagasAI:
         """
         texto_bruto = "\n".join([f"{titulo} - Postada ({data})" for titulo, data, funcao, cidade, salario, empresa in self._vagas_hoje])
         """
-        print(self._vagas_hoje)
         texto_bruto = ""
         for vaga in self._vagas_hoje:
             for info in range(len(vaga)):
