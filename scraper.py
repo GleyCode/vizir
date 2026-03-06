@@ -124,7 +124,6 @@ class ColetaInfoVagas:
         except Exception as error:
             print(f"Campo não encontrado. {error}")
     
-    # TODO: Alterar a classe que identifica os cards, o correto é: "card"
     def localizar_vagas(self):
         """Encontre os cards de vagas.
         
@@ -135,7 +134,7 @@ class ColetaInfoVagas:
         try:
             time.sleep(2)
             self._vagas = self._navegador.find_elements(By.CLASS_NAME, 
-                        "js_rowCard"
+                        "card"
                         )
         except Exception as error:
             print(f"Erro encontrado ao buscar as classes HTML: {error}")
