@@ -43,8 +43,15 @@ class FiltraVagasAI:
         Cria um texto bruto com as vagas do dia e um prompt para orientar a IA 
         no processo de filtragem com base no perfil informado.
         """
-        texto_bruto = "\n".join([f"{titulo} - Postada ({data})" for titulo, data in self._vagas_hoje])
-        
+        """
+        texto_bruto = "\n".join([f"{titulo} - Postada ({data})" for titulo, data, funcao, cidade, salario, empresa in self._vagas_hoje])
+        """
+        print(self._vagas_hoje)
+        texto_bruto = ""
+        for vaga in self._vagas_hoje:
+            for info in range(len(vaga)):
+                texto_bruto += vaga[info] + "\n"
+                                
         if not texto_bruto:
             return "Olá boa noite. Passando para te avisar que nenhuma vaga foi encontrada hoje para o perfil especificado."
         
