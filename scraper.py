@@ -56,7 +56,7 @@ class ColetaInfoVagas:
         """
         try:            
             self._options = FirefoxOptions() # Modo headless
-            #self._options.add_argument("--headless")
+            self._options.add_argument("--headless")
         except Exception as error:
             print(f"Erro ao configurar o navegador: {error}")
     
@@ -142,9 +142,7 @@ class ColetaInfoVagas:
     def filtrar_por_data(self):
         """Filtre as vagas por data.
         
-        Filtra as vagas postadas "Hoje" e imprime o título e o texto de postado 
-        "Hoje".
-        """
+        Filtra as vagas postadas "Hoje" e armazena todas as informações."""
         vagas_hoje = []
         for vaga in self._vagas:
             try:
@@ -171,5 +169,4 @@ class ColetaInfoVagas:
                     vagas_hoje.append((titulo, data_texto, cidade, salario, empresa))
             except:
                 continue
-        print(vagas_hoje)
         return vagas_hoje

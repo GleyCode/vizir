@@ -50,6 +50,8 @@ class FiltraVagasAI:
         for vaga in self._vagas_hoje:
             for info in range(len(vaga)):
                 texto_bruto += vaga[info] + "\n"
+            texto_bruto += "\n"
+
                                 
         if not texto_bruto:
             return "Olá boa noite. Passando para te avisar que nenhuma vaga foi encontrada hoje para o perfil especificado."
@@ -61,16 +63,10 @@ class FiltraVagasAI:
         {texto_bruto}
         
         Critério de seleção: Vagas estritamente relacionadas a {self._perfil}.
-       
-        Esqueleto para exemplo de formatação:
-        
-        Vaga
-        Postada em: Hoje
-        ---
 
         Sua tarefa:
         1. Identifique quais vagas combinam com o perfil.
-        2. Crie uma mensagem amigável para Telegram, tendo como exemplo o esqueleto informado e formatação Markdown para listagem dessas vagas.
+        2. Crie uma mensagem amigável para Telegram, com as informações da vaga agrupadas por bloco e com formatação Markdown.
         3. Deixe sempre um espaço em branco para separar as vagas.
         4. Se não houver nenhuma correspondência exata, responda apenas: 
         "Olá boa noite. Passando para te avisar que nenhuma vaga foi encontrada hoje para o perfil especificado."
