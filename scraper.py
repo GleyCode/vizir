@@ -123,7 +123,7 @@ class ColetaInfoVagas:
             informar_cidade.send_keys(Keys.ENTER)
         except Exception as error:
             print(f"Campo não encontrado. {error}")
-            
+    
     def localizar_vagas(self):
         """Encontre os cards de vagas.
         
@@ -142,19 +142,31 @@ class ColetaInfoVagas:
     def filtrar_por_data(self):
         """Filtre as vagas por data.
         
-        Filtra as vagas postadas "Hoje" e imprime o título e o texto de postado 
-        "Hoje".
-        """
+        Filtra as vagas postadas "Hoje" e armazena todas as informações."""
         vagas_hoje = []
         for vaga in self._vagas:
             try:
                 data_elemento = vaga.find_element(By.CLASS_NAME, "text-nowrap")
                 data_texto = data_elemento.text.strip()
                 
-                if "Ontem" in data_texto:
-                    titulo = vaga.find_element(By.TAG_NAME, "h2").text
-                    vagas_hoje.append((titulo, data_texto))
+                if "Hoje" in data_texto:
+                    titulo = vaga.find_element(
+                        By.TAG_NAME, 
+                        "h2").text.strip()
+            
+                    cidade = vaga.find_element(
+                        By.CLASS_NAME, 
+                        "mb-8").text.strip()
+                    
+                    salario = vaga.find_element(
+                        By.CSS_SELECTOR,
+                        ".d-inline-flex > div").text.strip()
+                    
+                    empresa = vaga.find_element(
+                        By.CSS_SELECTOR, 
+                        ".text-body > a").text.strip()
+                    
+                    vagas_hoje.append((titulo, data_texto, cidade, salario, empresa))
             except:
                 continue
-        print(vagas_hoje)
-        return vagas_hojes
+        return vagas_hoje
